@@ -1,0 +1,23 @@
+version: "3.8"
+name: "Realestate"
+services:
+  user-db:
+    image: mysql:latest
+    container_name: user-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_DATABASE=userdb     # Changed from MYSQL_DB
+    ports:
+      - "13306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-umysql", "-pmysql"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 500m
